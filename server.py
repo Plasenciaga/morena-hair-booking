@@ -1,5 +1,6 @@
 import os
 import json
+import base64
 import sqlite3
 import secrets
 import hashlib
@@ -16,6 +17,8 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent
 PUBLIC = ROOT / "public"
+EMAIL_ASSETS = ROOT / "email-assets"
+BOOKING_INFO_IMAGE = EMAIL_ASSETS / "morena-termininfo.jpeg"
 DB_PATH = Path(os.getenv("DB_PATH", str(ROOT / "booking.db")))
 
 HOST = os.getenv("HOST", "0.0.0.0")
@@ -146,14 +149,30 @@ def verify_password(password, stored):
 ADMIN_HASH = hash_password(ADMIN_PASSWORD)
 
 
-def send_email_resend(to_addr, subject, body):
+def send_email_resend(to_addr, subject, body, attachment_paths=None):
+    email_data = {
+        "from": RESEND_FROM,
+        "to": [to_addr],
+        "subject": subject,
+        "text": body,
+    }
+
+    attachments = []
+    for path in attachment_paths or []:
+        path = Path(path)
+        if not path.exists() or not path.is_file():
+            print(f"[ANHANG FEHLT] {path}")
+            continue
+        attachments.append({
+            "filename": path.name,
+            "content": base64.b64encode(path.read_bytes()).decode("ascii"),
+        })
+
+    if attachments:
+        email_data["attachments"] = attachments
+
     payload = json.dumps(
-        {
-            "from": RESEND_FROM,
-            "to": [to_addr],
-            "subject": subject,
-            "text": body,
-        },
+        email_data,
         ensure_ascii=False,
     ).encode("utf-8")
 
@@ -181,12 +200,34 @@ def send_email_resend(to_addr, subject, body):
         ) from exc
 
 
-def send_email_smtp(to_addr, subject, body):
+def send_email_smtp(to_addr, subject, body, attachment_paths=None):
     msg = EmailMessage()
     msg["From"] = SMTP_FROM
     msg["To"] = to_addr
     msg["Subject"] = subject
     msg.set_content(body)
+
+    for path in attachment_paths or []:
+        path = Path(path)
+        if not path.exists() or not path.is_file():
+            print(f"[ANHANG FEHLT] {path}")
+            continue
+
+        data = path.read_bytes()
+        suffix = path.suffix.lower()
+        if suffix in (".jpg", ".jpeg"):
+            maintype, subtype = "image", "jpeg"
+        elif suffix == ".png":
+            maintype, subtype = "image", "png"
+        else:
+            maintype, subtype = "application", "octet-stream"
+
+        msg.add_attachment(
+            data,
+            maintype=maintype,
+            subtype=subtype,
+            filename=path.name,
+        )
 
     context = ssl.create_default_context()
     if SMTP_TLS:
@@ -206,15 +247,25 @@ def send_email_smtp(to_addr, subject, body):
     return True
 
 
-def send_email(to_addr, subject, body):
+def send_email(to_addr, subject, body, attachment_paths=None):
     if not to_addr:
         return False
 
     if RESEND_API_KEY:
-        return send_email_resend(to_addr, subject, body)
+        return send_email_resend(
+            to_addr,
+            subject,
+            body,
+            attachment_paths=attachment_paths,
+        )
 
     if SMTP_HOST and SMTP_FROM:
-        return send_email_smtp(to_addr, subject, body)
+        return send_email_smtp(
+            to_addr,
+            subject,
+            body,
+            attachment_paths=attachment_paths,
+        )
 
     print(
         f"[EMAIL deaktiviert] An: {to_addr} | Betreff: {subject}\n"
@@ -239,7 +290,7 @@ def current_user(handler):
 
 
 class App(BaseHTTPRequestHandler):
-    server_version = "MorenaBooking/1.1"
+    server_version = "MorenaBooking/1.2"
 
     def log_message(self, fmt, *args):
         print("[%s] %s" % (self.log_date_time_string(), fmt % args))
@@ -504,6 +555,9 @@ Leistung: {service["name"]}
 Termin: {date_text}
 Preis: {price}
 
+Im Anhang findest du alle wichtigen Infos für deinen Termin,
+inklusive Vorbereitung und Adresse.
+
 Falls du den Termin ändern musst, melde dich bitte direkt bei uns.
 
 Liebe Grüsse
@@ -531,6 +585,7 @@ Notiz: {note or "-"}
                         customer_email,
                         f"Terminbestätigung – {BUSINESS_NAME}",
                         customer_body,
+                        attachment_paths=[BOOKING_INFO_IMAGE],
                     )
                     if not sent:
                         email_errors.append(
