@@ -1,0 +1,1 @@
+Neue hochauflösende Bilder sind bereits vollständig integriert. Den gesamten Inhalt dieses Ordners nach GitHub hochladen bzw. bestehende Dateien ersetzen. Railway deployt danach automatisch.

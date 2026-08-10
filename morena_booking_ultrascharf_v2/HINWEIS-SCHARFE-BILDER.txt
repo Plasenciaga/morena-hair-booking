@@ -1,0 +1,1 @@
+Diese Version nutzt neue Dateinamen (v3), damit Browser und Railway nicht versehentlich alte unscharfe Bilder aus dem Cache laden. Lade den kompletten Ordnerinhalt bzw. mindestens den Ordner public/ hoch und committe alles in GitHub.
