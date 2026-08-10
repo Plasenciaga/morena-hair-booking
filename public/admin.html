@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MORENA Admin</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body{background:#eee5df}
+    .adminbar{background:#111;color:#fff;padding:18px 0}
+    .adminbar .shell{display:flex;justify-content:space-between;align-items:center}
+    .adminmain{padding:32px 0 60px}
+    .panel{background:#f8f2ee;border:1px solid #cfc3bc;border-radius:10px;padding:22px;margin-bottom:18px}
+    .panel h2{font-family:Georgia,serif;margin-top:0}
+    .row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .table{width:100%;border-collapse:collapse;font-size:12px}
+    .table th,.table td{text-align:left;padding:10px;border-bottom:1px solid #d5c9c2;vertical-align:top}
+    .danger{background:#7e2525;color:white;border:0;padding:7px 10px;cursor:pointer}
+    .muted{color:#766e68}
+    #dashboard[hidden],#loginBox[hidden]{display:none}
+    @media(max-width:800px){.row{grid-template-columns:1fr 1fr}.table{display:block;overflow-x:auto}}
+    @media(max-width:520px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="adminbar">
+  <div class="shell">
+    <strong>MORENA · ADMIN</strong>
+    <button id="logoutBtn" class="btn btn-dark" hidden>LOGOUT</button>
+  </div>
+</div>
+
+<main class="adminmain shell">
+  <section id="loginBox" class="panel" style="max-width:520px;margin:40px auto">
+    <h2>Admin Login</h2>
+    <form id="loginForm">
+      <label>E-Mail<input id="loginEmail" type="email" required></label>
+      <label>Passwort<input id="loginPassword" type="password" required></label>
+      <button class="btn btn-dark" type="submit">EINLOGGEN</button>
+      <p id="loginMsg" class="message"></p>
+    </form>
+  </section>
+
+  <div id="dashboard" hidden>
+    <section class="panel">
+      <h2>Freien Termin anlegen</h2>
+      <form id="slotForm" class="row">
+        <label>Datum & Uhrzeit<input id="slotStart" type="datetime-local" required></label>
+        <div style="align-self:end"><button class="btn btn-dark" type="submit">SLOT SPEICHERN</button></div>
+      </form>
+      <p class="muted">Nur hier angelegte Slots erscheinen bei den Kundinnen als buchbar.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Leistung hinzufügen</h2>
+      <form id="serviceForm" class="row">
+        <label>Name<input id="svName" required placeholder="z.B. Silk Press"></label>
+        <label>Preis CHF<input id="svPrice" type="number" step="0.05" min="0" required></label>
+        <label>Dauer Minuten<input id="svDuration" type="number" min="15" step="15" value="60" required></label>
+        <label>Beschreibung<input id="svDescription" placeholder="Kurze Beschreibung"></label>
+        <div><button class="btn btn-dark" type="submit">SERVICE SPEICHERN</button></div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Slots</h2>
+      <div id="slotTable"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Buchungen</h2>
+      <div id="bookingTable"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Services</h2>
+      <div id="serviceTable"></div>
+    </section>
+  </div>
+</main>
+
+<script src="/admin.js"></script>
+</body>
+</html>
