@@ -1,0 +1,20 @@
+WICHTIG:
+Nach dem Entpacken musst du den INHALT dieses Ordners direkt in die Hauptseite
+deines GitHub-Repositories morena-hair-booking hochladen.
+
+Am Ende muss GitHub oben direkt zeigen:
+
+Dockerfile
+server.py
+README.md
+public/
+
+NICHT:
+morena_booking_v2/
+morena_public_ultrascharf_update/
+MORENA_GITHUB_ROOT_READY/
+
+Der Ordner public muss direkt neben server.py liegen.
+
+Die enthaltene Website nutzt die scharfen Bilder und enthält auch die
+Mehrfach-Terminverwaltung im Adminbereich.
