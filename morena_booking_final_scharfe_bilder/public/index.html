@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#171411">
+  <meta name="description" content="MORENA Hair Experience Zürich – Haircuts, Blowouts, Locken und private Hair Experience. Termin online buchen.">
+  <title>MORENA – Hair Experience Zürich</title>
+  <link rel="stylesheet" href="/style.css?v=20260810-2">
+</head>
+<body>
+<header class="hero" id="home">
+  <nav class="nav shell">
+    <a class="logo" href="#home" aria-label="MORENA Startseite">
+      <strong>MORENA</strong><span>HAIR EXPERIENCE</span><em>Zürich</em>
+    </a>
+    <div class="navlinks">
+      <a href="#home">HOME</a>
+      <a href="#services">SERVICES</a>
+      <a href="#about">ÜBER MICH</a>
+      <a href="#booking">TERMIN BUCHEN</a>
+      <a href="#contact">KONTAKT</a>
+    </div>
+    <a class="btn btn-dark" href="#booking">JETZT BUCHEN</a>
+  </nav>
+
+  <div class="hero-content shell">
+    <h1>GOOD HAIR.<br><span>GOOD DAY.</span></h1>
+    <p class="script hero-script">I got you. ♡</p>
+    <div class="hero-rule"></div>
+    <p class="lead">HAIRCUTS, BLOWOUTS &amp; GOOD VIBES<br>VON ZUHAUSE IN <u>ZÜRICH</u></p>
+    <a class="btn btn-dark big" href="#booking">JETZT TERMIN BUCHEN <b>→</b></a>
+    <div class="benefits">
+      <span>♡&nbsp; persönlich</span><span>♧&nbsp; professionell</span><span>ϟ&nbsp; schnell</span><span>✦&nbsp; exklusiv</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="intro shell" id="about">
+  <img class="intro-image studio" src="/images/studio.webp" alt="Stylingplatz von MORENA Hair Experience">
+  <div class="about-copy">
+    <p class="script pink small-script">hi, ich bin</p>
+    <h2>MORENA <span>♡</span></h2>
+    <p>Leidenschaftliche Hairstylistin mit dominikanischen Wurzeln &amp; einem Auge fürs Detail.</p>
+    <p>Ich arbeite von zuhause in Zürich und nehme mir für jede Kundin Zeit, um das Beste aus deinem Haar herauszuholen.</p>
+    <p>Ob stufiger Cut, voluminöser Blowout oder definierte Locken – ich sorge dafür, dass du dich nach deinem Termin nicht nur gut fühlst, sondern aussiehst wie deine beste Version.</p>
+    <p class="script pink ending-script">let’s make your hair your<br>best accessory ♡</p>
+  </div>
+  <img class="intro-image result" src="/images/result.webp" alt="Glänzendes Blowout-Ergebnis">
+</section>
+
+<section class="section shell" id="services">
+  <div class="section-head"><h2>MEINE SERVICES <span>♡</span></h2><i></i></div>
+  <div id="serviceCards" class="service-grid"></div>
+</section>
+
+<section class="specialty shell">
+  <div>
+    <p class="mini">SPEZIALISIERT AUF</p>
+    <p class="script pink specialty-title">Blowouts &amp; Locken ♡</p>
+    <p>Egal ob sleek &amp; straight, big volume, soft waves oder definierte Locken – ich bringe deine Haare zum Strahlen.</p>
+  </div>
+  <div class="round-pics">
+    <img src="/images/inspo-6.webp" alt="Lockiges Haar">
+    <img src="/images/inspo-2.webp" alt="Lockenwickler">
+    <img src="/images/service-curls.webp" alt="Wellen Styling">
+  </div>
+</section>
+
+<section class="section shell inspo" id="inspo">
+  <div class="section-head"><h2>HAIR INSPO <span>♡</span></h2><i></i></div>
+  <div class="inspo-grid">
+    <img src="/images/inspo-1.webp" alt="Voluminöser Blowout">
+    <img src="/images/inspo-2.webp" alt="Lockenwickler Styling">
+    <img src="/images/inspo-3.webp" alt="Glattes langes Haar">
+    <img src="/images/inspo-4.webp" alt="Hochsteckfrisur">
+    <img src="/images/inspo-5.webp" alt="Weiche Wellen">
+    <img src="/images/inspo-6.webp" alt="Definierte Locken">
+  </div>
+</section>
+
+<section class="booking-section" id="booking">
+  <div class="shell booking-shell">
+    <div class="steps">
+      <p class="mini">SO EINFACH GEHT'S</p>
+      <div><b>01</b><p><strong>SERVICE WÄHLEN</strong><br><small>Wähle deinen gewünschten Service.</small></p></div>
+      <div><b>02</b><p><strong>DATUM &amp; UHRZEIT</strong><br><small>Such dir einen freien Termin aus.</small></p></div>
+      <div><b>03</b><p><strong>BUCHUNG BESTÄTIGEN</strong><br><small>Du erhältst deine Bestätigung per E-Mail.</small></p></div>
+      <p class="script pink see-you">see you soon ♡</p>
+    </div>
+
+    <form class="booking-card" id="bookingForm">
+      <div class="booking-topline">
+        <p class="mini">WÄHLE DEINEN TERMIN</p>
+        <span id="slotCount" class="availability"></span>
+      </div>
+
+      <label class="field-label">Service
+        <select id="serviceSelect" required></select>
+      </label>
+
+      <div class="date-strip" id="dateStrip" aria-label="Verfügbare Tage"></div>
+      <div class="time-grid" id="timeGrid" aria-label="Verfügbare Uhrzeiten"></div>
+      <input type="hidden" id="slotSelect" required>
+
+      <div class="booking-details">
+        <div class="two">
+          <label>Name<input id="nameInput" required autocomplete="name" placeholder="Vorname Nachname"></label>
+          <label>E-Mail<input id="emailInput" required type="email" autocomplete="email" placeholder="name@email.ch"></label>
+        </div>
+        <div class="two">
+          <label>Telefon<input id="phoneInput" autocomplete="tel" placeholder="+41 ..."></label>
+          <label>Notiz<input id="noteInput" placeholder="Optional"></label>
+        </div>
+      </div>
+
+      <div id="summary" class="summary"></div>
+      <button class="btn btn-dark big booking-submit" type="submit">TERMIN BESTÄTIGEN →</button>
+      <p id="bookingMessage" class="message" aria-live="polite"></p>
+    </form>
+
+    <aside class="side-card">
+      <img src="/images/product.webp" alt="Hair Styling Produkte bei MORENA">
+    </aside>
+  </div>
+</section>
+</main>
+
+<footer id="contact">
+  <div class="shell footer-grid">
+    <a class="logo" href="#home"><strong>MORENA</strong><span>HAIR EXPERIENCE</span><em>Zürich</em></a>
+    <p>Zuhause in Zürich<br>Private Hair Experience</p>
+    <p>Follow me<br><a href="https://www.instagram.com/morenas.beautys/" target="_blank" rel="noopener">Instagram · @morenas.beautys</a></p>
+    <p>Bei Fragen<br><a href="https://www.instagram.com/morenas.beautys/" target="_blank" rel="noopener">Direkt schreiben</a></p>
+  </div>
+</footer>
+<script src="/app.js?v=20260810-2"></script>
+</body>
+</html>

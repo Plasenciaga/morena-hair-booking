@@ -1,0 +1,21 @@
+MORENA UPDATE – TERMINE + LOCKEN
+
+1. Dieses Projekt ersetzt die bisherige GitHub-Version.
+2. Railway deployed nach dem GitHub-Commit automatisch neu.
+3. Admin öffnen: https://morena-hair-booking-production.up.railway.app/admin
+4. Einloggen.
+5. Unter "Freie Zeiten für einen Tag erstellen":
+   - Datum wählen
+   - Von/Bis wählen
+   - Intervall auswählen
+   - "Freie Zeiten erstellen" klicken
+6. Danach erscheinen diese Slots automatisch auf der öffentlichen Buchungsseite.
+
+WICHTIG FÜR DAUERHAFTE TERMINE AUF RAILWAY:
+- Railway Volume am Web-Service mounten unter /data
+- Variable setzen: DB_PATH=/data/booking.db
+Ohne persistenten Speicher kann SQLite bei einem Redeploy zurückgesetzt werden.
+
+BILDER:
+- Locken Styling zeigt jetzt ein echtes Lockenmotiv aus der gelieferten Vorlage.
+- Für wirklich hochauflösende Bilder werden die Originalfotos benötigt. Aus einem Screenshot ausgeschnittene Bilder können nicht dieselbe Schärfe wie die Originaldateien erreichen.
