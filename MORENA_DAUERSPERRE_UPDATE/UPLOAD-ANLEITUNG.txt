@@ -1,0 +1,19 @@
+MORENA – automatische Terminsperre nach Servicedauer
+
+Diese drei Dateien ersetzen:
+- /server.py
+- /public/app.js
+- /public/index.html
+
+So hochladen:
+1. ZIP entpacken.
+2. server.py auf der HAUPTSEITE des GitHub-Repositories ersetzen.
+3. public/app.js und public/index.html im bestehenden GitHub-Ordner public/ ersetzen.
+4. Commit changes.
+5. Railway neu deployen lassen.
+
+Neue Logik:
+- Kundin wählt zuerst einen Service.
+- Die Website zeigt nur Startzeiten, in die die komplette Servicedauer passt, ohne eine bestehende Buchung zu überlappen.
+- Beispiel: Haircut & Blowout 90 Min. um 10:00 blockiert alle kollidierenden Startzeiten bis 11:30.
+- Die Prüfung passiert zusätzlich serverseitig beim Buchen, damit auch zwei fast gleichzeitige Buchungen keine Überschneidung erzeugen.
