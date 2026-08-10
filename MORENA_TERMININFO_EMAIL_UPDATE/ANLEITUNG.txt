@@ -1,0 +1,26 @@
+MORENA – Termininfo-Bild in der Bestätigungsmail
+
+Was ist neu?
+- Die Kundin bekommt nach erfolgreicher Buchung weiterhin die Terminbestätigung.
+- Das MORENA-Infobild wird in derselben E-Mail als JPEG-Anhang mitgeschickt.
+- Die Betreiber-/Owner-Mail bekommt den Anhang NICHT.
+- Das Bild liegt absichtlich NICHT im public/-Ordner, weil darauf die Privatadresse steht.
+- Resend wird weiterhin über HTTPS verwendet.
+- Ein E-Mail-Fehler macht eine bereits gespeicherte Buchung weiterhin nicht kaputt.
+
+GitHub:
+1. server.py auf der obersten Ebene des Repositories ersetzen.
+2. Den Ordner email-assets auf der obersten Ebene des Repositories anlegen/hochladen.
+3. Darin muss liegen:
+   email-assets/morena-termininfo.jpeg
+4. Commit changes.
+
+Railway:
+- Keine neue Variable nötig.
+- Vorhandene RESEND_API_KEY, RESEND_FROM, OWNER_EMAIL und DB_PATH bleiben wie sie sind.
+- Nach dem GitHub-Commit Railway deployen lassen.
+
+Test:
+- Einen neuen freien Slot verwenden.
+- Testbuchung an eine Adresse machen, an die euer aktuelles Resend-Setup senden darf.
+- In der Bestätigungsmail muss der Anhang "morena-termininfo.jpeg" erscheinen.
