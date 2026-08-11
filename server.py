@@ -697,6 +697,8 @@ Notiz: {note or "-"}
         if path == "/api/admin/slots":
             if not self.require_admin():
                 return
+
+            conn = None
             try:
                 data = json_body(self)
                 starts_at = str(
@@ -716,19 +718,27 @@ Notiz: {note or "-"}
                     (starts_at,),
                 )
                 conn.commit()
-                conn.close()
 
                 self.send_json({"ok": True})
-            except sqlite3.IntegrityError:
+            except sqlite3.IntegrityError as exc:
+                if conn is not None:
+                    conn.rollback()
+                print("Slot create integrity error:", repr(exc))
                 self.send_json(
                     {"error": "Dieser Slot existiert bereits."},
                     409,
                 )
-            except Exception:
+            except Exception as exc:
+                if conn is not None:
+                    conn.rollback()
+                print("Slot create error:", repr(exc))
                 self.send_json(
                     {"error": "Slot konnte nicht erstellt werden."},
-                    400,
+                    500,
                 )
+            finally:
+                if conn is not None:
+                    conn.close()
             return
 
         if path == "/api/admin/services":
